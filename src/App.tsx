@@ -4,6 +4,7 @@ import {Route, Routes} from "react-router-dom";
 import Meals from "./container/Meals/Meals";
 import Add from "./container/Add/Add";
 import NavBar from "./components/NavBar/NavBar";
+import Edit from "./container/Edit/Edit";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
           <Routes>
               <Route path='/' element={(<Meals/>)}/>
               <Route path='/add' element={(<Add/>)}/>
+              <Route path='/edit/:id' element={(<Edit/>)}/>
           </Routes>
       </>
   );

@@ -14,7 +14,7 @@ const Form:React.FC<Props> = ({meal, change, onSubmit, title, isLoading = false}
 
     return (
         <div className='mx-5'>
-            <h2>{title}</h2>
+            <h2 className='my-4 text-center'>{title}</h2>
             <form onSubmit={onSubmit}>
                 <select
                     onChange={change}
