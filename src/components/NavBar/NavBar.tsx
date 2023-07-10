@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 const NavBar = () => {
     return (
         <div>
-            <nav className="navbar bg-body-tertiary">
+            <nav className="navbar bg-body-tertiary px-5">
                 <div className="container-fluid">
                     <NavLink className="navbar-brand" to="/">Calories tracker</NavLink>
                 </div>

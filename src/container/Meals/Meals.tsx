@@ -8,6 +8,7 @@ import Spinner from "../../components/Spinner/Spinner";
 const Meals = () => {
     const [infoMeal, setInfoMeal] =useState<IMealMut[]>([]);
     const [loading, setLoading] = useState(false);
+    const [loadingBtn, setLoadingBtn] = useState(false);
 
     const fetchData = useCallback(async () => {
         try {
@@ -20,18 +21,33 @@ const Meals = () => {
                     return newMeal;
                 });
                 setInfoMeal(mealCard);
-                setLoading(false)
+            } else if (meals.data === null) {
+                setInfoMeal([]);
             }
+
         } catch (e) {
             console.log(e)
         } finally {
-            console.log(infoMeal)
+            setLoading(false);
+
         }
     }, []);
 
     useEffect(() => {
         void fetchData();
     }, [fetchData]);
+
+    const deletePost = (async (id:string) => {
+        setLoadingBtn(true);
+        try {
+            await axiosApi.delete(`/meals/${id}.json`);
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setLoadingBtn(false);
+            await fetchData();
+        }
+    });
 
     const reversed = [...infoMeal].reverse();
     const totalCalories = infoMeal.reduce((sum, meal) => sum + meal.calories, 0);
@@ -45,12 +61,21 @@ const Meals = () => {
             <div className='bg-body-tertiary pt-2 px-5'>
                 {reversed.map((el) => (
                     <>
-                        <CardMeal key={el.id} mealTime={el.mealTime} description={el.description} calorie={el.calories} id={el.id} />
+                        <CardMeal
+                            key={el.id}
+                            mealTime={el.mealTime}
+                            description={el.description}
+                            calorie={el.calories}
+                            id={el.id}
+                            deleteMeal={() => deletePost(el.id)}
+                            isLoading={loadingBtn}
+                        />
                     </>
                 ))}
             </div>
         </>
-    )
+    );
+
     if (loading) {
         page = <Spinner />
     }

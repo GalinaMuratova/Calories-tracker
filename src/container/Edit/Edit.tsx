@@ -14,6 +14,7 @@ const IMealState: IMeal = {
 const Edit = () => {
     const [meal, setMeal] = useState<IMeal>(IMealState);
     const [loading, setLoading] = useState(false);
+    const [loadingBtn, setLoadingBtn] = useState(false);
 
     const navigate = useNavigate();
     const {id} = useParams();
@@ -24,11 +25,10 @@ const Edit = () => {
             const response = await axiosApi.get<IMeal>(`/meals/${id}.json`);
             if (response) {
                 setMeal(response.data);
+                setLoading(false);
             }
         } catch (e) {
             console.log(e);
-        } finally {
-            setLoading(false);
         }
     }, [id]);
 
@@ -39,12 +39,12 @@ const Edit = () => {
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            setLoading(true);
+            setLoadingBtn(true);
             await axiosApi.put(`/meals/${id}.json`, meal);
         } catch (e) {
             console.log(e)
         } finally {
-            setLoading(false);
+            setLoadingBtn(false);
             navigate('/')
         }
     };
@@ -58,7 +58,7 @@ const Edit = () => {
     };
 
     let form = (
-        <Form meal={meal} change={change} onSubmit={onSubmit} title={'Edit meal'} isLoading={loading} />
+        <Form meal={meal} change={change} onSubmit={onSubmit} title={'Edit meal'} isLoading={loadingBtn} />
     );
 
     if (loading) {
