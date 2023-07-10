@@ -8,11 +8,12 @@ import Spinner from "../../components/Spinner/Spinner";
 const Meals = () => {
     const [infoMeal, setInfoMeal] =useState<IMealMut[]>([]);
     const [loading, setLoading] = useState(false);
+
     const fetchData = useCallback(async () => {
         try {
             setLoading(true);
             const meals = await axiosApi.get<IApiMeal>('/meals.json');
-            if (meals) {
+            if (meals.data) {
                 const mealCard = Object.keys(meals.data).map((key) => {
                     const newMeal = meals.data[key];
                     newMeal.id = key;
@@ -44,21 +45,18 @@ const Meals = () => {
             <div className='bg-body-tertiary pt-2 px-5'>
                 {reversed.map((el) => (
                     <>
-                        <CardMeal key={el.id} mealTime={el.mealTime} description={el.description} calorie={el.calories}  />
+                        <CardMeal key={el.id} mealTime={el.mealTime} description={el.description} calorie={el.calories} id={el.id} />
                     </>
                 ))}
             </div>
         </>
     )
-
     if (loading) {
         page = <Spinner />
     }
 
     return (
-        <>
-            {page}
-        </>
+        <>{page}</>
     );
 };
 

@@ -5,9 +5,10 @@ interface Props {
     mealTime:string;
     description:string;
     calorie: number;
+    id:string;
 }
 
-const CardMeal:React.FC<Props> = ({mealTime, description, calorie}) => {
+const CardMeal:React.FC<Props> = ({mealTime, description, calorie, id}) => {
     return (
             <div className="card my-3">
                 <div className="card-header">
@@ -16,7 +17,7 @@ const CardMeal:React.FC<Props> = ({mealTime, description, calorie}) => {
                 <div className="card-body">
                     <h5 className="card-title">{description}</h5>
                     <p className="card-text">{calorie} kcal</p>
-                    <Link className='btn btn-primary' to='/edit/:id'>Edit</Link>
+                    <Link className='btn btn-primary' to={'/edit/'+ id}>Edit</Link>
                     <button className='ms-4 btn btn-danger'> Delete</button>
                 </div>
             </div>

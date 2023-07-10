@@ -11,7 +11,6 @@ interface Props {
 }
 
 const Form:React.FC<Props> = ({meal, change, onSubmit, title, isLoading = false}) => {
-
     return (
         <div className='mx-5'>
             <h2 className='my-4 text-center'>{title}</h2>
@@ -34,7 +33,7 @@ const Form:React.FC<Props> = ({meal, change, onSubmit, title, isLoading = false}
                     type='text'
                     name='description'
                     placeholder='Meal description'
-                    value={meal.description || ''}
+                    value={meal.description}
                     onChange={change}
                     required
                     id='description'
